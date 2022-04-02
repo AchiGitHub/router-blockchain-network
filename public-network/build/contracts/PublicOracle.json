@@ -1,0 +1,125 @@
+{
+  "contractName": "PublicOracle",
+  "abi": [],
+  "metadata": "{\"compiler\":{\"version\":\"0.8.11+commit.d7f03943\"},\"language\":\"Solidity\",\"output\":{\"abi\":[],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"project:/contracts/PublicOracle.sol\":\"PublicOracle\"},\"evmVersion\":\"london\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"project:/contracts/PublicOracle.sol\":{\"keccak256\":\"0x9b307aa1b139e0bc6d6c0793853ebb93f83ee1654fbb26fe2d60d810f25ae0b0\",\"license\":\"GPL-3.0\",\"urls\":[\"bzz-raw://bbdb5a3017940d5a89dfb729a177f0604263dee2c36a4c8dfe2317780262dc54\",\"dweb:/ipfs/QmRw4AZzDCyJ9oiKSAifpvbkTqqTb2dNHtQYT3hQJfGDYB\"]}},\"version\":1}",
+  "bytecode": "0x6080604052348015600f57600080fd5b50603f80601d6000396000f3fe6080604052600080fdfea2646970667358221220f2e33106ef220eccee0d7aecc9df5aa252074b906490997636e0ec7aaad68bf664736f6c634300080b0033",
+  "deployedBytecode": "0x6080604052600080fdfea2646970667358221220f2e33106ef220eccee0d7aecc9df5aa252074b906490997636e0ec7aaad68bf664736f6c634300080b0033",
+  "immutableReferences": {},
+  "generatedSources": [],
+  "deployedGeneratedSources": [],
+  "sourceMap": "69:24:2:-:0;;;;;;;;;;;;;;;;;;;",
+  "deployedSourceMap": "69:24:2:-:0;;;;;",
+  "source": "// SPDX-License-Identifier: GPL-3.0\npragma solidity >=0.4.0 <0.9.0;\n\ncontract PublicOracle {}\n",
+  "sourcePath": "/Users/achinthaikiriwatte/Desktop/MSC/Semester IV/Research/Prototype Development/public-network/contracts/PublicOracle.sol",
+  "ast": {
+    "absolutePath": "project:/contracts/PublicOracle.sol",
+    "exportedSymbols": {
+      "PublicOracle": [
+        93
+      ]
+    },
+    "id": 94,
+    "license": "GPL-3.0",
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 92,
+        "literals": [
+          "solidity",
+          ">=",
+          "0.4",
+          ".0",
+          "<",
+          "0.9",
+          ".0"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "36:31:2"
+      },
+      {
+        "abstract": false,
+        "baseContracts": [],
+        "canonicalName": "PublicOracle",
+        "contractDependencies": [],
+        "contractKind": "contract",
+        "fullyImplemented": true,
+        "id": 93,
+        "linearizedBaseContracts": [
+          93
+        ],
+        "name": "PublicOracle",
+        "nameLocation": "78:12:2",
+        "nodeType": "ContractDefinition",
+        "nodes": [],
+        "scope": 94,
+        "src": "69:24:2",
+        "usedErrors": []
+      }
+    ],
+    "src": "36:58:2"
+  },
+  "legacyAST": {
+    "absolutePath": "project:/contracts/PublicOracle.sol",
+    "exportedSymbols": {
+      "PublicOracle": [
+        93
+      ]
+    },
+    "id": 94,
+    "license": "GPL-3.0",
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 92,
+        "literals": [
+          "solidity",
+          ">=",
+          "0.4",
+          ".0",
+          "<",
+          "0.9",
+          ".0"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "36:31:2"
+      },
+      {
+        "abstract": false,
+        "baseContracts": [],
+        "canonicalName": "PublicOracle",
+        "contractDependencies": [],
+        "contractKind": "contract",
+        "fullyImplemented": true,
+        "id": 93,
+        "linearizedBaseContracts": [
+          93
+        ],
+        "name": "PublicOracle",
+        "nameLocation": "78:12:2",
+        "nodeType": "ContractDefinition",
+        "nodes": [],
+        "scope": 94,
+        "src": "69:24:2",
+        "usedErrors": []
+      }
+    ],
+    "src": "36:58:2"
+  },
+  "compiler": {
+    "name": "solc",
+    "version": "0.8.11+commit.d7f03943.Emscripten.clang"
+  },
+  "networks": {},
+  "schemaVersion": "3.4.5",
+  "updatedAt": "2022-03-27T14:41:38.380Z",
+  "devdoc": {
+    "kind": "dev",
+    "methods": {},
+    "version": 1
+  },
+  "userdoc": {
+    "kind": "user",
+    "methods": {},
+    "version": 1
+  }
+}

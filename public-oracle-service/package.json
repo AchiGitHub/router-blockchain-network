@@ -1,0 +1,16 @@
+{
+  "name": "public-oracle-service",
+  "version": "1.0.0",
+  "description": "oracle service for the public blockchain to connect to router blockchain",
+  "main": "index.js",
+  "scripts": {
+    "start": "node --inspect ./index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Kavinda Ikiriwatte",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.26.1",
+    "web3": "^1.7.1"
+  }
+}

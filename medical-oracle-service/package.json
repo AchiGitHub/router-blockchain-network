@@ -1,0 +1,11 @@
+{
+  "name": "medical-oracle-service",
+  "version": "1.0.0",
+  "description": "oracle service for the medical blockchain to connect to the router blockchain",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Kavinda Ikiriwatte",
+  "license": "ISC"
+}

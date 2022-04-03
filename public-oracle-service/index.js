@@ -1,5 +1,7 @@
-const { getData, captureCallEvent } = require("./src/public-chain/ethereum");
+const { getData, captureCallEvent, captureAcknowledgeData } = require("./src/public-chain/ethereum");
 
 getData();
 
 captureCallEvent();
+
+captureAcknowledgeData();

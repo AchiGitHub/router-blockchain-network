@@ -1,12 +1,14 @@
-/*
-    End user requesting personal data from public blockchain 
-*/
-
+/**
+ * Connection to the public blockchain instantiated here
+ * listen to the user request data from blockchain through public blockchain
+ * address - Public smart contract address
+ * ABI - Public smart contract ABI
+ */
 const Web3 = require("web3");
-const { getMedicalData } = require("../router/Medical-Service/ethereum");
+const { getMedicalData, captureAcknowledgeEvent } = require("../router/Medical-Service/ethereum");
 
 const web3 = new Web3("ws://127.0.0.1:8547");
-const address = "0xf5D9B7bCE5184c3ff6Da7B50caCb2493F86897C1";
+const address = "0x824816ABD7C6749d61d85F0C78fEC7923D82f41a";
 
 const ABI = [
     {
@@ -130,7 +132,12 @@ const captureCallEvent = () => {
     })
 };
 
+const captureAcknowledgeData = () => {
+    captureAcknowledgeEvent();
+};
+
 module.exports = {
     getData,
-    captureCallEvent
+    captureCallEvent,
+    captureAcknowledgeData
 }

@@ -21,9 +21,9 @@ contract MedicalOracle {
         uint256 data
     );
     event CallbackRequestAcknowledged(
-        uint256 callId,
-        bool status,
-        string returnedData
+        uint256 source,
+        uint256 destination,
+        uint256 data
     );
 
     constructor() {
@@ -36,5 +36,13 @@ contract MedicalOracle {
         uint256 data
     ) public {
         emit CallbackRequestInitiated(source, destination, data);
+    }
+
+    function responseCall(
+        uint256 source,
+        uint256 destination,
+        uint256 data
+    ) public {
+        emit CallbackRequestAcknowledged(source, destination, data);
     }
 }

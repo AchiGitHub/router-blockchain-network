@@ -130,30 +130,29 @@ const getAccounts = () => {
     return web3.eth.getAccounts()
 };
 
-const getMedicalData = () => {
+const returnMedicalData = () => {
     return new Promise((resolve, reject) => {
         getAccounts()
             .then(accounts => {
-                contract.methods.requestCall(69, 69, 69)
+                contract.methods.responseCall(45, 45, 69)
                     .send({ from: accounts[1] })
                     .then((receipt) => {
-                        // console.log('Reciept', receipt)
+                        console.log('Reciept', receipt)
                     })
+                    .catch(err => console.log(err))
             })
             .catch(err => console.log(err))
     })
 };
 
 const captureCallEvent = () => {
-    contract.events.CallbackRequestInitiated(function (error, event) { console.log('Event data', event); })
+    contract.events.CallbackRequestInitiated(function (error, event) {
+        console.log('Event data from medical oracle', event);
+        returnMedicalData();
+    });
 };
 
-const captureAcknowledgeEvent = () => {
-    contract.events.CallbackRequestAcknowledged(function (error, event) { console.log('Acknowledge Event data to public Bc', event); })
-}
-
 module.exports = {
-    getMedicalData,
     captureCallEvent,
-    captureAcknowledgeEvent
+    returnMedicalData
 }

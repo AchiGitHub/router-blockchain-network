@@ -2,6 +2,6 @@ const { getData, captureCallEvent, captureAcknowledgeData } = require("./src/pub
 
 getData();
 
-captureCallEvent();
+captureCallEvent(1);
 
 captureAcknowledgeData();

@@ -8,7 +8,7 @@ const Web3 = require("web3");
 const { getMedicalData, captureAcknowledgeEvent } = require("../router/Medical-Service/ethereum");
 
 const web3 = new Web3("ws://127.0.0.1:8547");
-const address = "0x824816ABD7C6749d61d85F0C78fEC7923D82f41a";
+const address = "0xd94Aa5cA6D5FEE4DC15A442FC14b1E71c7B63a6d";
 
 const ABI = [
     {
@@ -126,9 +126,13 @@ const getData = () => {
 };
 
 
-const captureCallEvent = () => {
+const captureCallEvent = (id) => {
     contract.events.CallbackRequestInitiated(function (error, event) {
-        getMedicalData();
+        if (id === 1) {
+            getMedicalData();
+        } else {
+            return;
+        }
     })
 };
 

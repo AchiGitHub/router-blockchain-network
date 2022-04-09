@@ -4,7 +4,7 @@
 const Web3 = require("web3");
 
 const web3 = new Web3("ws://127.0.0.1:8545");
-const address = "0x7cd0A60f2DcD6B0f9e1d24a03f89A96d3c543E1b";
+const address = "0x424d9aF3f387e6134881436B6829E8c09c99e751";
 
 const ABI = [
     {

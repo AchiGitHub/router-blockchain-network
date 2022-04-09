@@ -22,21 +22,28 @@ function App() {
       .then(() => {
         let userAccount = getUserAccount();
         setUserAccount(userAccount);
-        let routes = getRouterNodes(userAccount);
-        console.log("🚀 ~ file: App.js ~ line 26 ~ .then ~ routes", routes)
+        getRouterNodes(userAccount).then(data => {
+          setRouterNodes(data);
+        });
       });
   }, []);
 
   const addRouter = (e) => {
     setRouterNode(nodeId, blockchainName, priority, blockchainAddress, userAccountState);
+    setRouterNodes([...routerNodes, {
+      blockchainAddress,
+      name: blockchainName,
+      priority: priority,
+      node: nodeId
+    }])
   }
 
   return (
     <VStack>
       <TopBar />
-      <Container maxW='800px'>
-        <Table />
-        <Heading mb={4}>Add Router Node</Heading>
+      <Container maxW='1200px'>
+        <Table data={routerNodes} />
+        <Heading mb={4} as='h4' size='md'>Add Router Node</Heading>
         <Grid templateColumns='repeat(2, 1fr)' columnGap={4}>
           <InputComponent name='Node Id' onChange={(value) => setNodeId(value)} />
           <InputComponent name='Priority' onChange={(value) => setPriority(value)} />

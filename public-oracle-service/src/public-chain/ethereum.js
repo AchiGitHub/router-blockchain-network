@@ -5,10 +5,10 @@
  * ABI - Public smart contract ABI
  */
 const Web3 = require("web3");
-const { getMedicalData, captureAcknowledgeEvent } = require("../router/Medical-Service/ethereum");
+const { getMedicalData, captureAcknowledgeEvent, medicalContract } = require("../router/Medical-Service/ethereum");
 
 const web3 = new Web3("ws://127.0.0.1:8547");
-const address = "0xd94Aa5cA6D5FEE4DC15A442FC14b1E71c7B63a6d";
+const address = "0xf990F045C289d3be258E3B0C980921f7650426a0";
 
 const ABI = [
     {
@@ -58,9 +58,15 @@ const ABI = [
             },
             {
                 "indexed": false,
-                "internalType": "uint256",
+                "internalType": "string",
                 "name": "data",
-                "type": "uint256"
+                "type": "string"
+            },
+            {
+                "indexed": false,
+                "internalType": "address",
+                "name": "callerAddress",
+                "type": "address"
             }
         ],
         "name": "CallbackRequestInitiated",
@@ -77,8 +83,56 @@ const ABI = [
             }
         ],
         "stateMutability": "view",
-        "type": "function",
-        "constant": true
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "address",
+                "name": "",
+                "type": "address"
+            }
+        ],
+        "name": "users",
+        "outputs": [
+            {
+                "internalType": "string",
+                "name": "name",
+                "type": "string"
+            },
+            {
+                "internalType": "string",
+                "name": "email",
+                "type": "string"
+            },
+            {
+                "internalType": "string",
+                "name": "birthdate",
+                "type": "string"
+            },
+            {
+                "internalType": "uint256",
+                "name": "age",
+                "type": "uint256"
+            },
+            {
+                "internalType": "string",
+                "name": "phoneNumber",
+                "type": "string"
+            },
+            {
+                "internalType": "string",
+                "name": "streetAddress",
+                "type": "string"
+            },
+            {
+                "internalType": "string",
+                "name": "city",
+                "type": "string"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
     },
     {
         "inputs": [
@@ -93,14 +147,130 @@ const ABI = [
                 "type": "uint256"
             },
             {
-                "internalType": "uint256",
+                "internalType": "string",
                 "name": "data",
-                "type": "uint256"
+                "type": "string"
             }
         ],
         "name": "requestCall",
         "outputs": [],
         "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "uint256",
+                "name": "source",
+                "type": "uint256"
+            },
+            {
+                "internalType": "bool",
+                "name": "status",
+                "type": "bool"
+            },
+            {
+                "internalType": "string",
+                "name": "data",
+                "type": "string"
+            }
+        ],
+        "name": "acknowledgeCall",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "string",
+                "name": "name",
+                "type": "string"
+            },
+            {
+                "internalType": "string",
+                "name": "email",
+                "type": "string"
+            },
+            {
+                "internalType": "string",
+                "name": "birthdate",
+                "type": "string"
+            },
+            {
+                "internalType": "uint256",
+                "name": "age",
+                "type": "uint256"
+            },
+            {
+                "internalType": "string",
+                "name": "phoneNumber",
+                "type": "string"
+            },
+            {
+                "internalType": "string",
+                "name": "streetAddress",
+                "type": "string"
+            },
+            {
+                "internalType": "string",
+                "name": "city",
+                "type": "string"
+            }
+        ],
+        "name": "registerUser",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "inputs": [],
+        "name": "getUser",
+        "outputs": [
+            {
+                "components": [
+                    {
+                        "internalType": "string",
+                        "name": "name",
+                        "type": "string"
+                    },
+                    {
+                        "internalType": "string",
+                        "name": "email",
+                        "type": "string"
+                    },
+                    {
+                        "internalType": "string",
+                        "name": "birthdate",
+                        "type": "string"
+                    },
+                    {
+                        "internalType": "uint256",
+                        "name": "age",
+                        "type": "uint256"
+                    },
+                    {
+                        "internalType": "string",
+                        "name": "phoneNumber",
+                        "type": "string"
+                    },
+                    {
+                        "internalType": "string",
+                        "name": "streetAddress",
+                        "type": "string"
+                    },
+                    {
+                        "internalType": "string",
+                        "name": "city",
+                        "type": "string"
+                    }
+                ],
+                "internalType": "struct PublicCrossChain.User",
+                "name": "",
+                "type": "tuple"
+            }
+        ],
+        "stateMutability": "view",
         "type": "function"
     }
 ];
@@ -129,16 +299,32 @@ const getData = () => {
 const captureCallEvent = (id) => {
     contract.events.CallbackRequestInitiated(function (error, event) {
         if (id === 1) {
-            getMedicalData();
+            getMedicalData(event.returnValues.callerAddress);
         } else {
             return;
         }
     })
 };
 
-const captureAcknowledgeData = () => {
-    captureAcknowledgeEvent();
+const acknowledgeData = async (acknowledgeData) => {
+    await getAccounts()
+        .then(accounts => {
+            contract.methods.acknowledgeCall(15, 15, acknowledgeData)
+                .send({ from: accounts[1] })
+                .then((receipt) => {
+                    console.log('Reciept', receipt)
+                })
+        })
+        .catch(err => console.log(err))
 };
+
+const captureAcknowledgeData = () => {
+    medicalContract.events.CallbackRequestAcknowledged(function (error, event) {
+        let data = event.returnValues.data;
+        acknowledgeData(data);
+    });
+};
+
 
 module.exports = {
     getData,

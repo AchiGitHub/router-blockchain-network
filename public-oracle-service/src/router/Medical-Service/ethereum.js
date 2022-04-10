@@ -1,10 +1,12 @@
 /*
     Calling medical router node in the blockchain router 
+    ABI - Router ABI 
+    Contract address - Router Medical contract oracle
 */
 const Web3 = require("web3");
 
 const web3 = new Web3("ws://127.0.0.1:8545");
-const address = "0x2e6531Ab7DcAA83E2a23f8551f7C8521617d4c8E";
+const address = "0x6D59C93a5e9f0Eb22b9EBaF6d258e07BAf9c693A";
 
 const ABI = [
     {
@@ -29,9 +31,9 @@ const ABI = [
             },
             {
                 "indexed": false,
-                "internalType": "uint256",
+                "internalType": "string",
                 "name": "data",
-                "type": "uint256"
+                "type": "string"
             }
         ],
         "name": "CallbackRequestAcknowledged",
@@ -54,9 +56,15 @@ const ABI = [
             },
             {
                 "indexed": false,
-                "internalType": "uint256",
+                "internalType": "string",
                 "name": "data",
-                "type": "uint256"
+                "type": "string"
+            },
+            {
+                "indexed": false,
+                "internalType": "address",
+                "name": "callerAddress",
+                "type": "address"
             }
         ],
         "name": "CallbackRequestInitiated",
@@ -73,8 +81,7 @@ const ABI = [
             }
         ],
         "stateMutability": "view",
-        "type": "function",
-        "constant": true
+        "type": "function"
     },
     {
         "inputs": [
@@ -89,9 +96,14 @@ const ABI = [
                 "type": "uint256"
             },
             {
-                "internalType": "uint256",
+                "internalType": "string",
                 "name": "data",
-                "type": "uint256"
+                "type": "string"
+            },
+            {
+                "internalType": "address",
+                "name": "callerAddress",
+                "type": "address"
             }
         ],
         "name": "requestCall",
@@ -112,9 +124,9 @@ const ABI = [
                 "type": "uint256"
             },
             {
-                "internalType": "uint256",
+                "internalType": "string",
                 "name": "data",
-                "type": "uint256"
+                "type": "string"
             }
         ],
         "name": "responseCall",
@@ -124,17 +136,17 @@ const ABI = [
     }
 ];
 
-const contract = new web3.eth.Contract(ABI, address);
+const medicalContract = new web3.eth.Contract(ABI, address);
 
 const getAccounts = () => {
     return web3.eth.getAccounts()
 };
 
-const getMedicalData = () => {
+const getMedicalData = (callerAddress) => {
     return new Promise((resolve, reject) => {
         getAccounts()
             .then(accounts => {
-                contract.methods.requestCall(69, 69, 69)
+                medicalContract.methods.requestCall(69, 69, "60", callerAddress)
                     .send({ from: accounts[1] })
                     .then((receipt) => {
                         // console.log('Reciept', receipt)
@@ -145,15 +157,20 @@ const getMedicalData = () => {
 };
 
 const captureCallEvent = () => {
-    contract.events.CallbackRequestInitiated(function (error, event) { console.log('Event data', event); })
+    medicalContract.events.CallbackRequestInitiated(function (error, event) { console.log('Event data', event); })
 };
 
 const captureAcknowledgeEvent = () => {
-    contract.events.CallbackRequestAcknowledged(function (error, event) { console.log('Acknowledge Event data to public Bc', event); })
+    return medicalContract.events.CallbackRequestAcknowledged(function (error, event) {
+        let data = event.returnValues.data;
+        let patientData = JSON.parse(data).patientDetailsJson;
+        return JSON.parse(patientData);
+    })
 }
 
 module.exports = {
     getMedicalData,
     captureCallEvent,
-    captureAcknowledgeEvent
+    captureAcknowledgeEvent,
+    medicalContract
 }

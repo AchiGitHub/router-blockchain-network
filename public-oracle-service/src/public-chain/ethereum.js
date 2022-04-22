@@ -8,7 +8,7 @@ const Web3 = require("web3");
 const { getMedicalData, captureAcknowledgeEvent, medicalContract } = require("../router/Medical-Service/ethereum");
 
 const web3 = new Web3("ws://127.0.0.1:8547");
-const address = "0xf990F045C289d3be258E3B0C980921f7650426a0";
+const address = "0x80d4857b5Ccfc418BCA5cbD0EB69929c3E8D5301";
 
 const ABI = [
     {
@@ -320,6 +320,7 @@ const acknowledgeData = async (acknowledgeData) => {
 
 const captureAcknowledgeData = () => {
     medicalContract.events.CallbackRequestAcknowledged(function (error, event) {
+        console.log("🚀 ~ file: ethereum.js ~ line 326 ~ event", event)
         let data = event.returnValues.data;
         acknowledgeData(data);
     });

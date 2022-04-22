@@ -5,7 +5,7 @@ const Web3 = require("web3");
 const { getPatientData } = require("../service/MedicalRecords");
 
 const web3 = new Web3("ws://127.0.0.1:8545");
-const address = "0x6D59C93a5e9f0Eb22b9EBaF6d258e07BAf9c693A";
+const address = "0x16D98D43cbfCd02f4995E65d2853aBA3F6b4294f";
 
 const ABI = [
     {

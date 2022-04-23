@@ -17,8 +17,8 @@ contract PublicCrossChain {
     mapping(address => User) public users;
 
     struct Call {
-        string source;
-        string destination;
+        address source;
+        address destination;
         string data;
     }
 
@@ -28,13 +28,14 @@ contract PublicCrossChain {
     }
 
     event CallbackRequestInitiated(
-        uint256 source,
+        address source,
         uint256 destination,
         string data,
         address callerAddress
     );
+
     event CallbackRequestAcknowledged(
-        uint256 callId,
+        address indexed callerId,
         bool status,
         string returnedData
     );
@@ -47,16 +48,16 @@ contract PublicCrossChain {
         uint256 source,
         uint256 destination,
         string memory data
-    ) public {
-        emit CallbackRequestInitiated(source, destination, data, msg.sender);
+    ) external {
+        emit CallbackRequestInitiated(owner, destination, data, msg.sender);
     }
 
     function acknowledgeCall(
-        uint256 source,
+        address caller,
         bool status,
         string memory data
-    ) public {
-        emit CallbackRequestAcknowledged(source, status, data);
+    ) external {
+        emit CallbackRequestAcknowledged(caller, status, data);
     }
 
     function registerUser(
@@ -67,7 +68,7 @@ contract PublicCrossChain {
         string memory phoneNumber,
         string memory streetAddress,
         string memory city
-    ) public {
+    ) external {
         users[msg.sender] = User(
             name,
             email,

@@ -20,10 +20,15 @@ function MedicalDashboard() {
 
     const [response, setResponse] = useState([]);
 
+    /**
+     * Get the acknowledgement from the user account
+     * @returns The data requested from the thrid party blockchain network
+     */
     const getResponse = () => {
-        return contract.events.CallbackRequestAcknowledged(function (error, event) {
+        let userAddress = localStorage.getItem('userAccount');
+        return contract.events.CallbackRequestAcknowledged({ filter: { callerId: JSON.parse(userAddress).account } }, function (error, event) {
             let reciepts = localStorage.getItem('reciepts');
-            let newlitem = [...JSON.parse(reciepts), event];
+            let newlitem = !reciepts ? [event] : [...JSON.parse(reciepts), event];
             localStorage.setItem('reciepts', JSON.stringify(newlitem));
             let data = event.returnValues.returnedData;
             let details = JSON.parse(JSON.parse(data).patientDetailsJson);

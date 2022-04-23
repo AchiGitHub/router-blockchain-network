@@ -8,7 +8,7 @@ const Web3 = require("web3");
 const { getMedicalData, captureAcknowledgeEvent, medicalContract } = require("../router/Medical-Service/ethereum");
 
 const web3 = new Web3("ws://127.0.0.1:8547");
-const address = "0x80d4857b5Ccfc418BCA5cbD0EB69929c3E8D5301";
+const address = "0x41d70817e51ce079f0583F58d4d64dBa24ab994B";
 
 const ABI = [
     {
@@ -20,10 +20,10 @@ const ABI = [
         "anonymous": false,
         "inputs": [
             {
-                "indexed": false,
-                "internalType": "uint256",
-                "name": "callId",
-                "type": "uint256"
+                "indexed": true,
+                "internalType": "address",
+                "name": "callerId",
+                "type": "address"
             },
             {
                 "indexed": false,
@@ -46,9 +46,9 @@ const ABI = [
         "inputs": [
             {
                 "indexed": false,
-                "internalType": "uint256",
+                "internalType": "address",
                 "name": "source",
-                "type": "uint256"
+                "type": "address"
             },
             {
                 "indexed": false,
@@ -160,9 +160,9 @@ const ABI = [
     {
         "inputs": [
             {
-                "internalType": "uint256",
-                "name": "source",
-                "type": "uint256"
+                "internalType": "address",
+                "name": "caller",
+                "type": "address"
             },
             {
                 "internalType": "bool",
@@ -299,17 +299,17 @@ const getData = () => {
 const captureCallEvent = (id) => {
     contract.events.CallbackRequestInitiated(function (error, event) {
         if (id === 1) {
-            getMedicalData(event.returnValues.callerAddress);
+            getMedicalData(event.returnValues.callerAddress, event.returnValues.source);
         } else {
             return;
         }
     })
 };
 
-const acknowledgeData = async (acknowledgeData) => {
+const acknowledgeData = async (acknowledgeData, callerAddress) => {
     await getAccounts()
         .then(accounts => {
-            contract.methods.acknowledgeCall(15, 15, acknowledgeData)
+            contract.methods.acknowledgeCall(callerAddress, true, acknowledgeData)
                 .send({ from: accounts[1] })
                 .then((receipt) => {
                     console.log('Reciept', receipt)
@@ -318,12 +318,19 @@ const acknowledgeData = async (acknowledgeData) => {
         .catch(err => console.log(err))
 };
 
-const captureAcknowledgeData = () => {
-    medicalContract.events.CallbackRequestAcknowledged(function (error, event) {
-        console.log("🚀 ~ file: ethereum.js ~ line 326 ~ event", event)
-        let data = event.returnValues.data;
-        acknowledgeData(data);
-    });
+/**
+ * the acknowledgement for the specific blockchain netowkr will be returned from the router network
+ */
+const captureAcknowledgeData = async () => {
+    await getAccounts()
+        .then(accounts => {
+            medicalContract.events.CallbackRequestAcknowledged({ filter: { source: accounts[0] } }, function (error, event) {
+                let data = event.returnValues.data;
+                let callerAddress = event.returnValues.callerAddress;
+                acknowledgeData(data, callerAddress);
+            });
+        })
+        .catch(err => console.log(err))
 };
 
 

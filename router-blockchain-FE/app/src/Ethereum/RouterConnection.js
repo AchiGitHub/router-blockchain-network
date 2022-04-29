@@ -4,7 +4,7 @@
 const Web3 = require("web3");
 
 const web3 = new Web3("ws://127.0.0.1:8545");
-const address = "0x424d9aF3f387e6134881436B6829E8c09c99e751";
+const address = "0x871FA9529D18b49559cB76dFE7578d0b6d0F514c";
 
 const ABI = [
     {
@@ -36,11 +36,15 @@ const ABI = [
                 "internalType": "string",
                 "name": "timestamp",
                 "type": "string"
+            },
+            {
+                "internalType": "string",
+                "name": "applicationInterface",
+                "type": "string"
             }
         ],
         "stateMutability": "view",
-        "type": "function",
-        "constant": true
+        "type": "function"
     },
     {
         "inputs": [
@@ -67,6 +71,11 @@ const ABI = [
             {
                 "internalType": "string",
                 "name": "timestamp",
+                "type": "string"
+            },
+            {
+                "internalType": "string",
+                "name": "applicationInterface",
                 "type": "string"
             }
         ],
@@ -106,6 +115,11 @@ const ABI = [
                         "internalType": "string",
                         "name": "timestamp",
                         "type": "string"
+                    },
+                    {
+                        "internalType": "string",
+                        "name": "applicationInterface",
+                        "type": "string"
                     }
                 ],
                 "internalType": "struct Router.RouterInformation",
@@ -114,8 +128,7 @@ const ABI = [
             }
         ],
         "stateMutability": "view",
-        "type": "function",
-        "constant": true
+        "type": "function"
     },
     {
         "inputs": [],
@@ -142,6 +155,11 @@ const ABI = [
                         "internalType": "string",
                         "name": "timestamp",
                         "type": "string"
+                    },
+                    {
+                        "internalType": "string",
+                        "name": "applicationInterface",
+                        "type": "string"
                     }
                 ],
                 "internalType": "struct Router.RouterInformation[]",
@@ -150,16 +168,15 @@ const ABI = [
             }
         ],
         "stateMutability": "view",
-        "type": "function",
-        "constant": true
+        "type": "function"
     }
 ];
 
 const contract = new web3.eth.Contract(ABI, address);
 
-const setRouterNode = (node, blockchainName, priority, blockchainAddress, userAddress) => {
+const setRouterNode = (node, blockchainName, priority, blockchainAddress, userAddress, abi) => {
     let timestamp = new Date().toISOString();
-    contract.methods.setRouter(node, blockchainName, priority, blockchainAddress, timestamp)
+    contract.methods.setRouter(node, blockchainName, priority, blockchainAddress, timestamp, abi)
         .send({ from: userAddress, gasLimit: 500000 })
         .then((receipt) => {
             console.log('Reciept', receipt)
@@ -174,7 +191,8 @@ const getRouterNodes = (userAddress) => {
                 blockchainAddress: item[2],
                 name: item[0],
                 priority: item[1],
-                node: idx
+                node: idx,
+                applicationInterface: item.applicationInterface
             })
         });
         return items;

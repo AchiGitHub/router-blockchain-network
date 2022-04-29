@@ -1,4 +1,4 @@
-import { Box, Button, Container, Grid, Heading, VStack } from '@chakra-ui/react';
+import { Box, Button, Container, Grid, Heading, Text, Textarea, VStack } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import './App.css';
 import InputComponent from './components/Input';
@@ -15,6 +15,7 @@ function App() {
   const [nodeId, setNodeId] = useState('');
   const [priority, setPriority] = useState('');
   const [userAccountState, setUserAccount] = useState('');
+  const [applicationInterface, setApplicationInterface] = useState('');
   const [routerNodes, setRouterNodes] = useState([]);
 
   useEffect(() => {
@@ -29,12 +30,13 @@ function App() {
   }, []);
 
   const addRouter = (e) => {
-    setRouterNode(nodeId, blockchainName, priority, blockchainAddress, userAccountState);
+    setRouterNode(nodeId, blockchainName, priority, blockchainAddress, userAccountState, applicationInterface);
     setRouterNodes([...routerNodes, {
       blockchainAddress,
       name: blockchainName,
       priority: priority,
-      node: nodeId
+      node: nodeId,
+      applicationInterface: applicationInterface
     }])
   }
 
@@ -44,12 +46,18 @@ function App() {
       <Container maxW='1200px'>
         <Table data={routerNodes} />
         <Heading mb={4} as='h4' size='md'>Add Router Node</Heading>
-        <Grid templateColumns='repeat(2, 1fr)' columnGap={4}>
+        <Grid templateColumns='repeat(2, 2fr)' columnGap={4}>
           <InputComponent name='Node Id' onChange={(value) => setNodeId(value)} />
           <InputComponent name='Priority' onChange={(value) => setPriority(value)} />
           <InputComponent name='Blockchain Name' onChange={(value) => setBlockchainName(value)} />
           <InputComponent name='Blockchain Address' onChange={(value) => setBlockchainAddress(value)} />
         </Grid>
+        <Box mt='2' display={'flex'}>
+          <Text fontSize='xl'>Application Binary Interface</Text>
+        </Box>
+        <Box mt='2' display={'flex'}>
+          <Textarea placeholder='ABI' onChange={(e) => setApplicationInterface(e.target.value)} />
+        </Box>
       </Container>
       <Container maxW='800px'>
         <Box w='100%' h='10' mt='10px'>

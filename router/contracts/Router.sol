@@ -7,6 +7,7 @@ contract Router {
         uint256 priority;
         address blockchainAddress;
         string timestamp;
+        string applicationInterface;
     }
 
     mapping(uint256 => RouterInformation) public routingAddresses;
@@ -17,13 +18,15 @@ contract Router {
         string memory blockchainName,
         uint256 priorirty,
         address blockchainAddress,
-        string calldata timestamp
+        string calldata timestamp,
+        string memory applicationInterface
     ) public {
         routingAddresses[node] = RouterInformation(
             blockchainName,
             priorirty,
             blockchainAddress,
-            timestamp
+            timestamp,
+            applicationInterface
         );
         routerAddressCount++;
     }

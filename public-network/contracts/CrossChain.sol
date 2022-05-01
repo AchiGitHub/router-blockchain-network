@@ -3,6 +3,7 @@ pragma solidity >=0.4.0 <0.9.0;
 
 contract PublicCrossChain {
     address public owner;
+    uint256 public nextRequest;
 
     struct User {
         string name;
@@ -18,9 +19,12 @@ contract PublicCrossChain {
 
     struct Call {
         address source;
-        address destination;
+        uint256 destination;
         string data;
+        address caller;
     }
+
+    mapping(uint256 => Call) public pendingRequests;
 
     struct Output {
         bool status;
@@ -44,12 +48,16 @@ contract PublicCrossChain {
         owner = msg.sender;
     }
 
-    function requestCall(
-        uint256 source,
-        uint256 destination,
-        string memory data
-    ) external {
+    function requestCall(uint256 destination, string memory data) external {
+        require(destination > 0, "Invalid crosschain tranasction");
+        pendingRequests[nextRequest] = Call(
+            owner,
+            destination,
+            data,
+            msg.sender
+        );
         emit CallbackRequestInitiated(owner, destination, data, msg.sender);
+        nextRequest++;
     }
 
     function acknowledgeCall(
@@ -82,5 +90,9 @@ contract PublicCrossChain {
 
     function getUser() public view returns (User memory) {
         return users[msg.sender];
+    }
+
+    function getNumberOfPendingCalls() public view returns (uint256) {
+        return nextRequest;
     }
 }

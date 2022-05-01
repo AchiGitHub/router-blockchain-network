@@ -277,7 +277,7 @@ const ABI = [
 const contract = new web3.eth.Contract(ABI, address);
 
 const requestData = (userAccount) => {
-    return contract.methods.requestCall(15, 15, 15)
+    return contract.methods.requestCall(15, 15)
         .send({ from: userAccount })
         .then((receipt) => {
             console.log('Reciept', receipt)

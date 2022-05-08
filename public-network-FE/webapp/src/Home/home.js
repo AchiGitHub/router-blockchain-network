@@ -14,7 +14,7 @@ function Home() {
                 </Box>
                 <Box textAlign={'center'} margin={10}>
                     <Heading size={'md'}>Recent Transactions</Heading>
-                    <Box
+                    {!!localStorage.getItem('reciepts') ? <Box
                         height={100}
                         borderRadius={10}
                         borderColor={'whiteAlpha.600'}
@@ -27,15 +27,15 @@ function Home() {
                     >
                         <List spacing={3}>
                             {
-                                !!localStorage.getItem('reciepts') && JSON.parse(localStorage.getItem('reciepts')).map((data, idx) => {
+                                JSON.parse(localStorage.getItem('reciepts')).map((data, idx) => {
                                     return <ListItem key={idx.toString()}>
-                                        <ListIcon as={MdCheckCircle} color='red.500' />
+                                        <ListIcon as={MdCheckCircle} color='green.500' />
                                         {data.transactionHash}
                                     </ListItem>
                                 })
                             }
                         </List>
-                    </Box>
+                    </Box> : <Heading size={'sm'}>No Recent Transactions</Heading>}
                 </Box>
             </Container>
         </App>

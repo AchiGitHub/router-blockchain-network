@@ -8,7 +8,7 @@ const Web3 = require("web3");
 const { getMedicalData, captureAcknowledgeEvent, medicalContract } = require("../router/Medical-Service/ethereum");
 
 const web3 = new Web3("ws://127.0.0.1:8547");
-const address = "0x41d70817e51ce079f0583F58d4d64dBa24ab994B";
+const address = "0x3fa26C9aab7eC8c1f51C14B29E6389784323EFF3";
 
 const ABI = [
     {
@@ -74,6 +74,20 @@ const ABI = [
     },
     {
         "inputs": [],
+        "name": "nextRequest",
+        "outputs": [
+            {
+                "internalType": "uint256",
+                "name": "",
+                "type": "uint256"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function",
+        "constant": true
+    },
+    {
+        "inputs": [],
         "name": "owner",
         "outputs": [
             {
@@ -83,7 +97,43 @@ const ABI = [
             }
         ],
         "stateMutability": "view",
-        "type": "function"
+        "type": "function",
+        "constant": true
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "uint256",
+                "name": "",
+                "type": "uint256"
+            }
+        ],
+        "name": "pendingRequests",
+        "outputs": [
+            {
+                "internalType": "address",
+                "name": "source",
+                "type": "address"
+            },
+            {
+                "internalType": "uint256",
+                "name": "destination",
+                "type": "uint256"
+            },
+            {
+                "internalType": "string",
+                "name": "data",
+                "type": "string"
+            },
+            {
+                "internalType": "address",
+                "name": "caller",
+                "type": "address"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function",
+        "constant": true
     },
     {
         "inputs": [
@@ -132,15 +182,11 @@ const ABI = [
             }
         ],
         "stateMutability": "view",
-        "type": "function"
+        "type": "function",
+        "constant": true
     },
     {
         "inputs": [
-            {
-                "internalType": "uint256",
-                "name": "source",
-                "type": "uint256"
-            },
             {
                 "internalType": "uint256",
                 "name": "destination",
@@ -271,7 +317,22 @@ const ABI = [
             }
         ],
         "stateMutability": "view",
-        "type": "function"
+        "type": "function",
+        "constant": true
+    },
+    {
+        "inputs": [],
+        "name": "getNumberOfPendingCalls",
+        "outputs": [
+            {
+                "internalType": "uint256",
+                "name": "",
+                "type": "uint256"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function",
+        "constant": true
     }
 ];
 

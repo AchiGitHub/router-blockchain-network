@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { ChakraProvider, theme } from '@chakra-ui/react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
@@ -15,7 +14,7 @@ ReactDOM.render(
     <ChakraProvider theme={theme}>
       <Router>
         <Routes>
-          <Route path="/register" element={<SignUp />} />
+          <Route path="/" element={<SignUp />} />
           <Route path="/home" element={<Home />} />
           <Route path="/medicare" element={<Medical />} />
           <Route path="/reciepts" element={<Reciepts />} />

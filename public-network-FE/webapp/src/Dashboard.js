@@ -6,7 +6,6 @@ import {
     CloseButton,
     Flex,
     HStack,
-    VStack,
     Icon,
     useColorModeValue,
     Link,

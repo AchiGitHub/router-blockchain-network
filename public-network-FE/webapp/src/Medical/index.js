@@ -1,7 +1,6 @@
 import {
     Accordion,
     Box,
-    Button,
     AccordionItem,
     AccordionButton,
     AccordionPanel,

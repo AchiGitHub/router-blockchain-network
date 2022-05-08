@@ -1,4 +1,4 @@
-import { Box, Container, Flex, Grid, Text, VStack } from '@chakra-ui/react'
+import { Box, Container, Grid, Text, VStack } from '@chakra-ui/react'
 import React, { useEffect, useState } from 'react'
 import Card from './Card'
 import Dashboard from './Dashboard'

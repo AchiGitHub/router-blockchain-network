@@ -4,7 +4,7 @@
 const Web3 = require("web3");
 
 const web3 = new Web3("ws://127.0.0.1:8546");
-const address = "0x4C0a62764cBE5EE987772246AE400176b75f99F5";
+const address = "0x7f2C46D393034da29953D2489cC4f41797E5e0A8";
 
 const ABI = [
     {
@@ -108,6 +108,11 @@ const saveMedicalRecord = async (patientName, patientData, patientAddress) => {
         .catch(err => console.log(err))
 };
 
+/**
+ * get medical data of the patient with the users public address
+ * @param {*} patientAddress 
+ * @returns 
+ */
 const getPatientData = async (patientAddress) => {
     return await getAccounts()
         .then(accounts => {

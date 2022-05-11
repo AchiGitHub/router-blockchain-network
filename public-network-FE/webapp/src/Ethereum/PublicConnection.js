@@ -7,7 +7,7 @@
 const Web3 = require("web3");
 
 const web3 = new Web3("ws://127.0.0.1:8547");
-const address = "0x3fa26C9aab7eC8c1f51C14B29E6389784323EFF3";
+const address = "0x6FC3472F62d2A3e023e53A055526718541B50326";
 
 const ABI = [
     {
@@ -338,7 +338,7 @@ const ABI = [
 const contract = new web3.eth.Contract(ABI, address);
 
 const requestData = (userAccount) => {
-    return contract.methods.requestCall(15, 15)
+    return contract.methods.requestCall(1, "requestCrosschainData")
         .send({ from: userAccount, gasLimit: 500000 })
         .then((receipt) => {
             console.log('Reciept', receipt)

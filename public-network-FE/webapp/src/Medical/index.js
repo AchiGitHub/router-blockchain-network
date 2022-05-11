@@ -47,7 +47,7 @@ function MedicalDashboard() {
             </Box>
             <Box mt={5}>
                 {
-                    response && response.map((data, idx) => {
+                    !!response && response.map((data, idx) => {
                         return <Accordion allowToggle key={idx.toString()}>
                             <AccordionItem>
                                 <h2>

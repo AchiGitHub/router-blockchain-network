@@ -6,7 +6,7 @@
 const Web3 = require("web3");
 
 const web3 = new Web3("ws://127.0.0.1:8545");
-const address = "0x6bfB6BF090E4E568C985772e406416BC71cb6816";
+const address = "0xeef6A02daD12a52BbfE089D941Aec45c1b8C6600";
 
 const ABI = [
     {
@@ -87,7 +87,8 @@ const ABI = [
             }
         ],
         "stateMutability": "view",
-        "type": "function"
+        "type": "function",
+        "constant": true
     },
     {
         "inputs": [
@@ -157,7 +158,7 @@ const getMedicalData = (callerAddress, sourceAddress) => {
     return new Promise((resolve, reject) => {
         getAccounts()
             .then(accounts => {
-                medicalContract.methods.requestCall(sourceAddress, 69, "60", callerAddress)
+                medicalContract.methods.requestCall(sourceAddress, 1, "customconfig", callerAddress)
                     .send({ from: accounts[1] })
                     .then((receipt) => {
                         // console.log('Reciept', receipt)

@@ -4,7 +4,7 @@
 const Web3 = require("web3");
 
 const web3 = new Web3("ws://127.0.0.1:8545");
-const address = "0xbA5CFdD00729E006A5E8D7350766de78EC66CD14";
+const address = "0x73Ef3c3F68a2a919f03d73EEd5De24c1C3d009c3";
 
 const ABI = [
     {
@@ -44,7 +44,8 @@ const ABI = [
             }
         ],
         "stateMutability": "view",
-        "type": "function"
+        "type": "function",
+        "constant": true
     },
     {
         "inputs": [
@@ -128,7 +129,8 @@ const ABI = [
             }
         ],
         "stateMutability": "view",
-        "type": "function"
+        "type": "function",
+        "constant": true
     },
     {
         "inputs": [],
@@ -168,7 +170,8 @@ const ABI = [
             }
         ],
         "stateMutability": "view",
-        "type": "function"
+        "type": "function",
+        "constant": true
     }
 ];
 

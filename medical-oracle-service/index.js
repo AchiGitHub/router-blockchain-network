@@ -1,5 +1,6 @@
 const { captureCallEvent, returnMedicalData } = require("./src/router");
 const { saveMedicalRecord, getPatientData } = require("./src/service/MedicalRecords");
 
-saveMedicalRecord("Saman", "[{\"id\":1,\"illness\":\"Diabetes\",\"value\":\"120\",\"remarks\":[\"Reduce eating sweets\",\"Workout\"]},{\"id\":2,\"illness\":\"Pressure\",\"value\":\"90\",\"remarks\":[\"Reduce eating Fatty food\",\"Workout\"]}]", "0xBa824255ECc5C6b504606B2Ec8b52E6a144AA7bd")
+//add the initial data to the medical blockchain network
+saveMedicalRecord("Jane Doe", "[{\"id\":1,\"illness\":\"Covid-19\",\"value\":\"12\",\"remarks\":[\"Rest\",\"Workout\"]},{\"id\":2,\"illness\":\"Pressure\",\"value\":\"90\",\"remarks\":[\"Reduce eating Fatty food\",\"Workout\"]}]", "0xB45882d6e03425d9CE5bfea01df2D7976330F220")
 captureCallEvent();
